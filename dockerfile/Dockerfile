@@ -34,7 +34,7 @@ RUN git clone https://github.com/gpgpu-sim/gpgpu-sim_distribution.git $GPGPUSIM_
 
 # set gpgpusim environment variable
 ENV PTX_SIM_USE_PTX_FILE=1.ptx
-ENV	PTX_SIM_KERNELFILE=_1.ptx
+ENV PTX_SIM_KERNELFILE=_1.ptx
 ENV CUOBJDUMP_SIM_FILE=jj
 ENV GPGPUSIM_CONFIG=gcc-5.5.0/cuda-11000/release
 ENV QTINC=/usr/include
