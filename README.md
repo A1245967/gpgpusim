@@ -53,6 +53,7 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 4. compile the cuda code by **nvcc**
 
    ```bash
+   $ cd cuda-example/
    $ nvcc --cudart shared -o vecadd vecadd.cu
    ```
 
@@ -61,8 +62,8 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 5. move the execution file to the config folder and run the program
 
    ```bash
-   $ mv vecadd SM7_TITANV
-   $ cd SM7_TITANV
+   $ mv vecadd tested-cfgs/SM7_TITANV
+   $ cd tested-cfgs/SM7_TITANV
    $ ./vecadd
    ```
 
