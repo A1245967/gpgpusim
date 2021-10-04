@@ -31,13 +31,13 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
    The following command is the simplest way to create the container.
 
    ```bash
-   $ docker run -it gpgpusim bash
+   $ docker run -it --name container_name gpgpusim bash
    ```
 
    Note: The container will record each command and the changes of the environment. Therefore, the container size will become larger. We recommend to mount a folder to host and remove the container while exiting the container.
 
    ```bash
-   $ docker run -it --rm -v your_folder_in_host:/root gpgpusim bash
+   $ docker run -it --name container_name --rm -v your_folder_in_host:/root gpgpusim bash
    ```
 
    This command will let your host folder become the *$HOME* for root in the container. You can put your project in there for easier access between host and container.
