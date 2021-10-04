@@ -46,8 +46,12 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 
 3. put the cuda example into the container
 
-   You can put the example code at the folder where you mount the container. Besides, you can push/pull your code by git.
-
+   You can put the example code at the folder where you mount the container. For example, you can use git to pull your code at *$HOME* path.
+   
+   ```bash
+   $ cd /root
+   $ git clone https://github.com/A1245967/gpgpusim.git
+   ```
    
 
 4. compile the cuda code by **nvcc**
