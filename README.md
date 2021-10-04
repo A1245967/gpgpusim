@@ -58,11 +58,12 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 
    ```bash
    $ cd cuda-example/
-   $ nvcc --cudart shared -o vecadd vecadd.cu
+   $ nvcc --cudart shared -o vecadd vecadd.cu -gencode arch=compute_70,code=compute_70
    ```
 
    Note: You need to add flag ***--cudart shared***  if you use the gpgpusim as the simulator.  
-
+   (the number 70 refers to the SM version. You would need to set it based on the GPGPU-Sim config -gpgpu-ptx-force-max-capability you use)
+   
 5. move the execution file to the config folder and run the program
 
    ```bash
