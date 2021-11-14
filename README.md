@@ -35,15 +35,7 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
    $ docker run -it --name container_name gpgpusim bash
    ```
 
-   Note: The container will record each command and the changes of the environment. Therefore, the container size will become larger. We recommend to mount a folder to host and remove the container while exiting the container.
 
-   ```bash
-   $ docker run -it --name container_name --rm -v your_folder_in_host:/root gpgpusim bash
-   ```
-
-   This command will let your host folder become the *$HOME* for root in the container. You can put your project in there for easier access between host and container.
-
-   
 
 3. put the cuda example into the container
 
@@ -59,17 +51,17 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 
    ```bash
    $ cd cuda-example/
-   $ nvcc --cudart shared -o vecadd vecadd.cu -gencode arch=compute_70,code=compute_70
+   $ nvcc --cudart shared -o vecadd vecadd.cu -gencode arch=compute_75,code=compute_75
    ```
 
    Note: You need to add flag ***--cudart shared***  if you use the gpgpusim as the simulator.  
-   The number 70 refers to the SM version. You would need to set it based on the GPGPU-Sim config -gpgpu-ptx-force-max-capability you use.
+   The number 75 refers to the SM version. You would need to set it based on the GPGPU-Sim config `-gpgpu-ptx-force-max-capability` you use.
    
 5. move the execution file to the config folder and run the program
 
    ```bash
-   $ mv vecadd tested-cfgs/SM7_TITANV
-   $ cd tested-cfgs/SM7_TITANV
+   $ mv vecadd ../gpu-configs/SM75_RTX2060
+   $ cd ../gpu-configs/SM75_RTX2060
    $ ./vecadd
    ```
 
