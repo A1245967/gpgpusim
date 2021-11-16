@@ -44,11 +44,11 @@ int main(){
     cudaMemcpy(d_B, h_B, N * N * sizeof(float), cudaMemcpyHostToDevice);
 
     // fill in correct thread/blocks
-    dim3 blockSize( (N + BLOCK_SIZE - 1)/BLOCK_SIZE , (N + BLOCK_SIZE - 1)/BLOCK_SIZE);
-    dim3 numBlock( BLOCK_SIZE, BLOCK_SIZE);
+    dim3 numBlock( (N + BLOCK_SIZE - 1)/BLOCK_SIZE , (N + BLOCK_SIZE - 1)/BLOCK_SIZE);
+    dim3 threadBlock( BLOCK_SIZE, BLOCK_SIZE);
 
     // MatAdd kernel
-    MatAdd<<<numBlock, blockSize>>>(d_A, d_B, d_C);
+    MatAdd<<<numBlock, threadBlock>>>(d_A, d_B, d_C);
     cudaDeviceSynchronize();
 
     // transfer data back to host
