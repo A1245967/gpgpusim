@@ -116,36 +116,6 @@ __global__ void gpu_square_matrix_mult(int *d_a, int *d_b, int *d_result, int n)
 
 /*
 *********************************************************************
-function name: gpu_matrix_transpose
-
-description: matrix transpose
-
-parameters: 
-            &mat_in GPU device pointer to a rows X cols matrix
-            &mat_out GPU device output purpose pointer to a cols X rows matrix 
-            to store the result
-Note:
-    grid and block should be configured as:
-        dim3 dim_grid((n - 1) / BLOCK_SIZE + 1, (n - 1) / BLOCK_SIZE + 1, 1);
-        dim3 dim_block(BLOCK_SIZE, BLOCK_SIZE, 1);
-
-return: none
-*********************************************************************
-*/
-__global__ void gpu_matrix_transpose(int* mat_in, int* mat_out, unsigned int rows, unsigned int cols) 
-{
-    unsigned int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    unsigned int idy = blockIdx.y * blockDim.y + threadIdx.y;
-
-    if (idx < cols && idy < rows) 
-    {
-        unsigned int pos = idy * cols + idx;
-        unsigned int trans_pos = idx * rows + idy;
-        mat_out[trans_pos] = mat_in[pos];
-    }
-}
-/*
-*********************************************************************
 function name: cpu_matrix_mult
 
 description: dot product of two matrix (not only square) in CPU, 
@@ -214,15 +184,6 @@ int main(int argc, char const *argv[])
         }
     }
 
-    float gpu_elapsed_time_ms, cpu_elapsed_time_ms;
-
-    // some events to count the execution time
-    cudaEvent_t start, stop;
-    cudaEventCreate(&start);
-    cudaEventCreate(&stop);
-
-    // start to count execution time of GPU version
-    cudaEventRecord(start, 0);
     // Allocate memory space on the device 
     int *d_a, *d_b, *d_c;
     cudaMalloc((void **) &d_a, sizeof(int)*m*n);
@@ -250,23 +211,9 @@ int main(int argc, char const *argv[])
     // Transefr results from device to host 
     cudaMemcpy(h_c, d_c, sizeof(int)*m*k, cudaMemcpyDeviceToHost);
     cudaThreadSynchronize();
-    // time counting terminate
-    cudaEventRecord(stop, 0);
-    cudaEventSynchronize(stop);
-
-    // compute time elapse on GPU computing
-    cudaEventElapsedTime(&gpu_elapsed_time_ms, start, stop);
-    printf("Time elapsed on matrix multiplication of %dx%d . %dx%d on GPU: %f ms.\n\n", m, n, n, k, gpu_elapsed_time_ms);
 
     // start the CPU version
-    cudaEventRecord(start, 0);
-
     cpu_matrix_mult(h_a, h_b, h_cc, m, n, k);
-
-    cudaEventRecord(stop, 0);
-    cudaEventSynchronize(stop);
-    cudaEventElapsedTime(&cpu_elapsed_time_ms, start, stop);
-    printf("Time elapsed on matrix multiplication of %dx%d . %dx%d on CPU: %f ms.\n\n", m, n, n, k, cpu_elapsed_time_ms);
 
     // validate results computed by GPU
     int all_ok = 1;
@@ -286,7 +233,7 @@ int main(int argc, char const *argv[])
     // roughly compute speedup
     if(all_ok)
     {
-        printf("all results are correct!!!, speedup = %f\n", cpu_elapsed_time_ms / gpu_elapsed_time_ms);
+        printf("all results are correct!!!\n");
     }
     else
     {
