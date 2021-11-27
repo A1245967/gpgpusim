@@ -80,8 +80,8 @@ int main(int argc, char const *argv[])
 
     unsigned int x_size = 16;
     unsigned int y_size = 16;
-    unsigned int grid_rows = (m + x_size - 1) / x_size;
-    unsigned int grid_cols = (k + y_size - 1) / y_size;
+    unsigned int grid_cols = (m + x_size - 1) / x_size;
+    unsigned int grid_rows = (k + y_size - 1) / y_size;
     dim3 dimGrid(grid_cols, grid_rows);
     dim3 dimBlock(x_size, y_size);
    

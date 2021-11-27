@@ -47,10 +47,10 @@ int main()
     cudaMemcpy(d_B, h_B, N * N * sizeof(float), cudaMemcpyHostToDevice);
 
     // fill in correct thread/blocks
-    unsigned int x_size = 32;
-    unsigned int y_size = 32;
-    unsigned int grid_rows = (N + x_size - 1) / x_size;
-    unsigned int grid_cols = (N + y_size - 1) / y_size;
+    unsigned int x_size = 16;
+    unsigned int y_size = 16;
+    unsigned int grid_cols = (N + x_size - 1) / x_size;
+    unsigned int grid_rows = (N + y_size - 1) / y_size;
     dim3 dimGrid(grid_cols, grid_rows);
     dim3 dimBlock(x_size, y_size);
 
@@ -66,6 +66,7 @@ int main()
         if(h_C[i]!= 3.0)
         {
 	        all_ok = 0;
+            printf("wrong: %d", i);
 	    }
     }
 
