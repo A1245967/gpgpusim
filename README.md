@@ -19,8 +19,8 @@ The image is created from nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 1. pull the image to the local machine
 
    ```bash
-   $ docker pull a1245967/gpgpusim
-   $ docker tag a1245967/gpgpusim gpgpusim
+   $ docker pull ghcr.io/a1245967/gpgpusim
+   $ docker tag ghcr.io/a1245967/gpgpusim gpgpusim
    ```
 
    You can check the image information by the command  `docker images` after you pull the image.
